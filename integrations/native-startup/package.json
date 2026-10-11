@@ -1,0 +1,15 @@
+{
+  "name": "@laterano-ui/native-startup",
+  "version": "0.1.0",
+  "description": "Optional Laterano UI startup animation for the official DeepSeek Harness Web profile",
+  "type": "module",
+  "license": "MIT",
+  "bin": { "dsh-laterano": "cli.mjs" },
+  "files": ["cli.mjs", "state.mjs", "plugin.mjs", "bridge.mjs", "overlay.mjs", "assets", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "repository": { "type": "git", "url": "https://github.com/Ar1haraNaN7mI/LateranoUI.git", "directory": "integrations/native-startup" },
+  "engines": { "node": "^22.19.0 || >=24.0.0" },
+  "dependencies": {
+    "@deepseek-ai/dsh": "0.2.0-rc.2"
+  },
+  "scripts": { "test": "node --test test.mjs" }
+}
