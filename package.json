@@ -1,16 +1,17 @@
 {
   "name": "laterano-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Standalone Laterano startup animation and official DSH integration",
   "license": "MIT",
   "scripts": {
     "preview": "python scripts/preview.py",
-    "test": "npm run test:sequence && npm run test:text && npm run test:voice && npm run test:browser && npm run test:geometry && npm run test:bundle && npm run test:native",
+    "test": "npm run test:sequence && npm run test:text && npm run test:voice && npm run test:browser && npm run test:liveness && npm run test:geometry && npm run test:bundle && npm run test:native",
     "test:sequence": "node scripts/test_startup_sequence.cjs",
     "test:text": "node scripts/test_startup_text.cjs",
     "test:voice": "node scripts/test_startup_voice.cjs",
     "test:browser": "node scripts/test_startup_browser.cjs",
+    "test:liveness": "node --test scripts/test_startup_liveness.cjs",
     "test:geometry": "node scripts/test_startup_laterano.cjs",
     "test:bundle": "python scripts/test_bundle.py",
     "test:native": "node --test integrations/native-startup/test.mjs"

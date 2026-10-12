@@ -103,4 +103,6 @@ LateranoUI 是启动展示层。会话、模型、技能加载、插件运行和
 
 只有 `/api/access` 与 `/api/profile` 都明确返回 **404** 时，独立页面才被识别为纯静态预览。网络失败、畸形响应、401、403 或服务故障都不代表允许访问。纯静态预览可观看几何演出，但不能读取本机清单、持久保存身份或向嵌入宿主宣告解锁完成。
 
-官方插件将路由放在 `/__laterano_ui` 前缀下，由 `bridge.mjs` 映射本页请求；要求回环地址、匹配的 Host / Origin，以及写入令牌，并继续使用官方登录。它只支持固定版本 `@deepseek-ai/dsh@0.2.0-rc.2` 的本机 Web 入口，升级官方版本需重新验证这些接口。本仓库不提供独立 Rust 后端；已有的网页、Windows 桌面、TUI 与密码设置位于 [Rust 原项目](https://github.com/Ar1haraNaN7mI/deepseek-harness-rust-optimize)。
+官方插件将路由放在 `/__laterano_ui` 前缀下，由 `bridge.mjs` 映射本页请求；要求回环地址、匹配的 Host / Origin，以及写入令牌，并继续使用官方登录。这个可选覆盖层没有额外密码门禁，因此父页面的「返回 Harness」按钮可独立卸载失去响应的动画；官方本身仍负责登录和私有接口鉴权，不能将此恢复方式照搬为 Rust 密码门禁的解锁方式。挂载前记录标签页播放状态，同文档只允许一个覆盖层；会话存储不可用时不挂载可选动画。
+
+它只支持固定版本 `@deepseek-ai/dsh@0.2.0-rc.2` 的本机 Web 入口，升级官方版本需重新验证这些接口。本仓库不提供独立 Rust 后端；已有的网页、Windows 桌面、TUI 与密码设置位于 [Rust 原项目](https://github.com/Ar1haraNaN7mI/deepseek-harness-rust-optimize)。

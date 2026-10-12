@@ -98,7 +98,7 @@ dsh-laterano startup enabled off    # 恢复默认关闭
 dsh-laterano web --port 3081        # 官方网页参数继续传递
 ```
 
-一次性选择在启动成功、首次打开通过官方登录的本机网页时消费；`--no-open` 会等到手动打开，帮助、配置导出和非 Web 命令不消费。显式本次开关优先，同时消费该次选择。同一标签页完成或跳过后，刷新不会重复播放。
+一次性选择在启动成功、首次打开通过官方登录的本机网页时消费；`--no-open` 会等到手动打开，帮助、配置导出和非 Web 命令不消费。显式本次开关优先，同时消费该次选择。动画挂载前即记录本次播放；同一服务、同一标签页即使在播放中刷新，也不会从头重播。浏览器禁止会话存储时直接进入官方工作台，避免无法记忆播放状态而反复开场。
 
 配置独立存放于 `$DSH_HOME/laterano-ui`，未设置 `DSH_HOME` 时为 `~/.dsh/laterano-ui`。**此插件沿用官方登录，不新增 Rust 版的访问密码系统。** 支持官方 `web` / `--profile web` 的本机浏览器入口；不包含官方 Electron、远程部署、自定义原生预设或终端动画。
 
@@ -158,6 +158,16 @@ python scripts/install_dsh.py --desktop-shortcut --desktop-workspace "D:\project
 ```
 
 更新时在 **Rust 原项目目录**执行 `git pull` 后重新运行 `python scripts/install_dsh.py`。`--root <目录>` 支持隔离安装；卸载对应 Cargo 安装中的程序可用 `cargo uninstall dsh-cli`，自定义安装根则用 `cargo uninstall --root <目录> dsh-cli`。网页资源位于安装根的 `share/dsh/web`，快捷方式与用户配置需要另行按需清理；不会因卸载程序自动删除聊天记录或凭据。完整说明以 [原项目 README](https://github.com/Ar1haraNaN7mI/deepseek-harness-rust-optimize#readme) 为准。
+
+## 开屏停住或重复播放的排查
+
+- 默认有三个确认节点（序章、身份、能力确认）。背景仍在运动、画面等待点按或 `Enter`，属于交互等待；可按 `C` 切换连续播放。配置了密码的 Rust 宿主仍需真实验证。
+- 独立预览完成后会停在终幕，只有再次点按或重播才重新开始。嵌入官方或 Rust 工作台的动画完成后会退出展示层。
+- 声音设备被暂停或浏览器未返回播放结果时，音频初始化最多等待 2 秒，单段下载与解码最多等待 10 秒；缺失结束事件的旁白会在音频时长加 2 秒后停止（上限 30 秒），视觉流程继续。这些期限不替代身份验证或伪造加载成功。
+- 本地能力流最多等待 120 秒；超时明确显示失败。官方插件提供独立的「返回 Harness」按钮，即使子页未响应也可以结束可选动画，官方登录保护保持有效。
+- 更新前的官方插件可能在播放中刷新后重播，重复注入也可能叠加画面。更新仓库并重新运行 `python scripts/install_native_startup.py`，重启对应服务；Rust 版在原项目重新运行 `python scripts/install_dsh.py`。
+
+故障回归可运行 `node --test scripts/test_startup_liveness.cjs`，覆盖挂起音频、流超时、完成通知、重播与页面恢复；完整检查使用 `npm test`。
 
 ## 接入自己的网页
 

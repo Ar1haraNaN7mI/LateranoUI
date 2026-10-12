@@ -28,7 +28,7 @@ DSH installation. To prepare a portable package without installing anything:
 
 ```sh
 python scripts/install_native_startup.py --pack-only
-npm install --global ./target/native-startup-package/laterano-ui-native-startup-0.1.0.tgz
+npm install --global ./target/native-startup-package/laterano-ui-native-startup-0.1.1.tgz
 ```
 
 Install that tarball on another machine with a supported Node.js version.
@@ -59,8 +59,16 @@ Animation is **off by default**. `startup enabled on|off` changes the default.
 local official web page after successful boot. `--startup` / `--no-startup`
 override this launch and consume a pending choice at that same point.
 `--no-open` leaves it pending until the page is opened. Help, configuration
-dumps, and non-web profiles do not consume the choice. A completed or skipped
-animation does not replay on refresh within the same tab and server session.
+dumps, and non-web profiles do not consume the choice. The tab records the
+opening before mounting it, so refreshing during playback, completion, or
+skipping does not replay it within the same tab and server session. Repeated
+script injections share one overlay. If tab session storage is unavailable,
+the optional animation is skipped and the official UI remains available.
+
+The parent page's **返回 Harness** button remains clickable and keyboard
+reachable even if the animation fails after loading. It returns to the
+official UI and restores the page's focus and interaction state. This does
+not change or bypass official DSH authentication.
 
 `startup profile` with no extra arguments prints the saved profile. Username
 and badge can also be edited in the animation settings. Preferences and the
